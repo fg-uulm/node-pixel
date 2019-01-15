@@ -10,15 +10,15 @@
 
 ## firmware/src/controller_src/firmata/node_pixel_firmata.ino
 
--  **TODO** `(line 272)` : drop support in Firmata 2.6
--  **TODO** `(line 283)` : drop support in Firmata 2.6
--  **TODO** `(line 333)` : put error msgs in EEPROM
--  **TODO** `(line 335)` : save status to EEPROM here, if changed
--  **TODO** `(line 429)` : save status to EEPROM here, if changed
--  **TODO** `(line 634)` : could assign a number to map to SCL or SDA
--  **TODO** `(line 714)` : option to load config from EEPROM instead of default
--  **TODO** `(line 752)` : this can never execute, since no pins default to digital input
--  **TODO** `(line 810)`  - ensure that Stream buffer doesn't go over 60 bytes
+-  **TODO** `(line 279)` : drop support in Firmata 2.6
+-  **TODO** `(line 290)` : drop support in Firmata 2.6
+-  **TODO** `(line 340)` : put error msgs in EEPROM
+-  **TODO** `(line 342)` : save status to EEPROM here, if changed
+-  **TODO** `(line 436)` : save status to EEPROM here, if changed
+-  **TODO** `(line 641)` : could assign a number to map to SCL or SDA
+-  **TODO** `(line 721)` : option to load config from EEPROM instead of default
+-  **TODO** `(line 759)` : this can never execute, since no pins default to digital input
+-  **TODO** `(line 826)`  - ensure that Stream buffer doesn't go over 60 bytes
 
 ## firmware/src/libs/lightws2812/lw_ws2812.cpp
 
@@ -40,4 +40,4 @@
 
 * * *
 
-Last generated: Tue Jan 15 2019 13:59:24 by [grunt-todo](https://github.com/leny/grunt-todo).
+Last generated: Tue Jan 15 2019 14:07:52 by [grunt-todo](https://github.com/leny/grunt-todo).

@@ -40,6 +40,7 @@ module.exports = function(grunt) {
                 flatten: true,
                 src: [
                     'libs/ws2812/*',
+                    'libs/sk6812/*',
                     'libs/lightws2812/*',
                     '!libs/protocol.md',
                     'controller_src/backpack/*'

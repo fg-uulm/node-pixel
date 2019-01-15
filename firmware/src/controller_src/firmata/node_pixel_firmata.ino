@@ -57,6 +57,13 @@
 SerialFirmata serialFeature;
 #endif
 
+const int ledsPerStrip = 120;
+
+// why multiply by 6? 2 bytes per colour??
+DMAMEM int displayMemory[ledsPerStrip*8];
+int drawingMemory[ledsPerStrip*8];
+
+OctoSK6812 leds(ledsPerStrip, displayMemory, drawingMemory, SK6812_GRBW);
 /* analog inputs */
 int analogInputsToReport = 0; // bitwise array to store pin reporting
 
@@ -787,8 +794,17 @@ void setup()
   }
 
   systemResetCallback();  // reset to default config
+// put your setup code here, to run once:
+  leds.begin();
+  leds.show();
 
-  ws2812_initialise();
+  leds.setPixel(0, 0xFF000000);
+  leds.setPixel(1, 0x00FF0000);
+  leds.setPixel(2, 0x0000FF00);
+  leds.setPixel(3, 0x000000FF);
+  leds.setPixel(4, 0xFFFFFFFF);
+  leds.show();
+  delay(5000);
 }
 
 /*==============================================================================
