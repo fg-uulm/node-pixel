@@ -1,6 +1,6 @@
 # Current tasks
 
-**Version:** `0.4.1`
+**Version:** `0.10.1`
 
 > Library for controlling addressable LEDs (such as NeoPixels) from firmata or Johnny Five.
 
@@ -8,28 +8,36 @@
 
 ## TODO
 
+## firmware/src/controller_src/firmata/node_pixel_firmata.ino
+
+-  **TODO** `(line 272)` : drop support in Firmata 2.6
+-  **TODO** `(line 283)` : drop support in Firmata 2.6
+-  **TODO** `(line 333)` : put error msgs in EEPROM
+-  **TODO** `(line 335)` : save status to EEPROM here, if changed
+-  **TODO** `(line 429)` : save status to EEPROM here, if changed
+-  **TODO** `(line 634)` : could assign a number to map to SCL or SDA
+-  **TODO** `(line 714)` : option to load config from EEPROM instead of default
+-  **TODO** `(line 752)` : this can never execute, since no pins default to digital input
+-  **TODO** `(line 810)`  - ensure that Stream buffer doesn't go over 60 bytes
+
+## firmware/src/libs/lightws2812/lw_ws2812.cpp
+
+-  **TODO** `(line 58)` : Remove magic threes
+
+## firmware/src/libs/sk6812/sk6812.cpp
+
+-  **TODO** `(line 264)` : this could be faster with DMA, especially if the
+
 ## firmware/src/README.md
 
 -  **TODO** `(line 56)` 
 
-## firmware/src/controller_src/firmata/node_pixel_firmata.ino
-
--  **TODO** `(line 29)` : use Program Control to load stored profiles from EEPROM
--  **TODO** `(line 302)` : put error msgs in EEPROM
--  **TODO** `(line 304)` : save status to EEPROM here, if changed
--  **TODO** `(line 368)` : save status to EEPROM here, if changed
--  **TODO** `(line 630)` : option to load config from EEPROM instead of default
--  **TODO** `(line 663)` : this can never execute, since no pins default to digital input
-
-## firmware/src/libs/lightws2812/lw_ws2812.h
-
--  **TODO** `(line 34)`  get this to work in setup
-
 ## lib/pixel.js
 
--  **TODO** `(line 3)` :
+-  **TODO** `(line 5)` :
+-  **TODO** `(line 765)`  probably should be pulling the color off the obj rather than
 
 
 * * *
 
-Last generated: Wed Dec 09 2015 00:18:01 by [grunt-todo](https://github.com/leny/grunt-todo).
+Last generated: Tue Jan 15 2019 13:59:24 by [grunt-todo](https://github.com/leny/grunt-todo).

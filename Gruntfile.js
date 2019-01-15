@@ -26,6 +26,7 @@ module.exports = function(grunt) {
                 src: [
                     'libs/firmata/arduino/*.{cpp,h}',
                     'libs/ws2812/*',
+                    'libs/sk6812/*',
                     'libs/lightws2812/*',
                     '!libs/protocol.md',
                     'controller_src/firmata/*'

@@ -29,6 +29,7 @@
 
 #include "./lw_ws2812.h"
 #include "./ws2812.h"
+#include "./sk6812.h"
 
 #define serialport Serial2
 
