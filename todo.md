@@ -32,9 +32,10 @@
 
 -  **TODO** `(line 5)` :
 -  **TODO** `(line 536)`  (CF) Look into stripcolor here to find the green value - double check what colorVlaue returns
+-  **TODO** `(line 652)`  (CF) check the value of eact color byte here
 -  **TODO** `(line 783)`  probably should be pulling the color off the obj rather than
 
 
 * * *
 
-Last generated: Fri Jan 25 2019 18:10:00 by [grunt-todo](https://github.com/leny/grunt-todo).
+Last generated: Fri Jan 25 2019 18:16:37 by [grunt-todo](https://github.com/leny/grunt-todo).
