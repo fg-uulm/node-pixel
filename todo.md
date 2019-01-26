@@ -31,11 +31,11 @@
 ## lib/pixel.js
 
 -  **TODO** `(line 5)` :
--  **TODO** `(line 536)`  (CF) Look into stripcolor here to find the green value - double check what colorVlaue returns
--  **TODO** `(line 652)`  (CF) check the value of eact color byte here
--  **TODO** `(line 783)`  probably should be pulling the color off the obj rather than
+-  **TODO** `(line 544)`  (CF) Look into stripcolor here to find the green value - double check what colorVlaue returns
+-  **TODO** `(line 798)`  (CF) Is this being used?
+-  **TODO** `(line 803)`  probably should be pulling the color off the obj rather than
 
 
 * * *
 
-Last generated: Fri Jan 25 2019 22:59:44 by [grunt-todo](https://github.com/leny/grunt-todo).
+Last generated: Sat Jan 26 2019 00:34:29 by [grunt-todo](https://github.com/leny/grunt-todo).
