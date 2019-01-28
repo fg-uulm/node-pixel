@@ -4,6 +4,7 @@
 bool isBackpack = false;
 bool isShifting = false; // used when we're doing memory intensive shifting
 bool writingFrame = false;
+bool isRGBW = false;
 WS2812 strips[MAX_STRIPS];
 
 uint16_t strip_lengths[MAX_STRIPS]; // now long each strip is.
@@ -12,7 +13,7 @@ bool strip_changed[MAX_STRIPS]; // used to optimise strip writes.
 uint8_t *px;
 uint16_t px_count;
 uint8_t strip_count = 0; // number of strips being used.
-uint8_t color_depth = 4; // Bytes used to hold one pixel
+uint8_t color_depth = 3; // Bytes used to hold one pixel
 
 uint8_t offsetRed;
 uint8_t offsetGreen;
@@ -77,11 +78,17 @@ uint8_t set_rgb_at(uint16_t index, uint32_t px_value) {
     if (index < px_count) {
         uint16_t tmp_pixel;
         tmp_pixel = index * color_depth;
+        if (isRGBW){
+            px[OFFSET_R(tmp_pixel)] = (uint8_t)(px_value >> 24);
+            px[OFFSET_G(tmp_pixel)] = (uint8_t)(px_value >> 16);
+            px[OFFSET_B(tmp_pixel)] = (uint8_t)(px_value >> 8);
+            px[OFFSET_W(tmp_pixel)] = (uint8_t)px_value;
+        } else {
+            px[OFFSET_R(tmp_pixel)] = (uint8_t)(px_value >> 16);
+            px[OFFSET_G(tmp_pixel)] = (uint8_t)(px_value >> 8);
+            px[OFFSET_B(tmp_pixel)] = (uint8_t)px_value;
+        }
 
-        px[OFFSET_R(tmp_pixel)] = (uint8_t)(px_value >> 24);
-        px[OFFSET_G(tmp_pixel)] = (uint8_t)(px_value >> 16);
-        px[OFFSET_B(tmp_pixel)] = (uint8_t)(px_value >> 8);
-        px[OFFSET_W(tmp_pixel)] = (uint8_t)px_value;
 
         return 0;
     }
@@ -179,12 +186,17 @@ void process_command(byte argc, byte *argv){
         }
         case PIXEL_SET_STRIP: {
             // sets the entirety of the strip to one colour
-
             uint32_t strip_colour = (uint32_t)argv[1] +
-                ((uint32_t)argv[2]<<7) +
-                ((uint32_t)argv[3]<<14) +
-                ((uint32_t)argv[4]<<21) +
-                ((uint32_t)argv[5]<<28);
+                                ((uint32_t)argv[2]<<7) +
+                                ((uint32_t)argv[3]<<14) +
+                                ((uint32_t)argv[4]<<21);
+            if (isRGBW){
+                uint32_t strip_colour = (uint32_t)argv[1] +
+                                ((uint32_t)argv[2]<<7) +
+                                ((uint32_t)argv[3]<<14) +
+                                ((uint32_t)argv[4]<<21) +
+                                ((uint32_t)argv[5]<<28);
+            }
 
             if (! isShifting) {
                 if (strip_colour == 0) {
@@ -204,7 +216,12 @@ void process_command(byte argc, byte *argv){
             // sets the pixel given by the index to the given colour
             uint16_t index = (uint16_t)argv[1] + ((uint16_t)argv[2]<<7);
             uint32_t colour = (uint32_t)argv[3] + ((uint32_t)argv[4]<<7) +
+                ((uint32_t)argv[5]<<14) + ((uint32_t)argv[6] << 21);
+            if (isRGBW){
+                uint32_t colour = (uint32_t)argv[3] + ((uint32_t)argv[4]<<7) +
                 ((uint32_t)argv[5]<<14) + ((uint32_t)argv[6] << 21) + ((uint32_t)argv[7] << 28);
+            }
+
 
             if (isShifting) {
                 break;
@@ -265,6 +282,8 @@ void process_command(byte argc, byte *argv){
                             setColorOrderBRG();
                             break;
                         case PIXEL_COLOUR_RGBW:
+                            isRGBW = true;
+                            color_depth = 4;
                             setColorOrderRGBW();
                             break;
                     }
