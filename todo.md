@@ -31,9 +31,9 @@
 ## lib/pixel.js
 
 -  **TODO** `(line 5)` :
--  **TODO** `(line 774)`  probably should be pulling the color off the obj rather than
+-  **TODO** `(line 776)`  probably should be pulling the color off the obj rather than
 
 
 * * *
 
-Last generated: Thu Jan 31 2019 16:19:40 by [grunt-todo](https://github.com/leny/grunt-todo).
+Last generated: Fri Feb 01 2019 16:38:26 by [grunt-todo](https://github.com/leny/grunt-todo).

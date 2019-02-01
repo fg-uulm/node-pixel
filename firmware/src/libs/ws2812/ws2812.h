@@ -32,10 +32,10 @@
 #define PIXEL_SHIFT             0x05 // shift all pixels n places along the strip
 
 // define the colour element layouts
-#define PIXEL_COLOUR_GRB        0x0
-#define PIXEL_COLOUR_RGB        0x1
-#define PIXEL_COLOUR_BRG        0x2
-#define PIXEL_COLOUR_RGBW       0x3
+#define PIXEL_COLOUR_GRB        0
+#define PIXEL_COLOUR_RGB        1
+#define PIXEL_COLOUR_BRG        2
+#define PIXEL_COLOUR_RGBW       3
 
 #define STRIP_START_PIN 0
 
