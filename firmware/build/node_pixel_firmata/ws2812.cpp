@@ -78,11 +78,17 @@ uint8_t set_rgb_at(uint16_t index, uint32_t px_value) {
     if (index < px_count) {
         uint16_t tmp_pixel;
         tmp_pixel = index * color_depth;
+        if (color_depth > 3){
+            px[OFFSET_R(tmp_pixel)] = (uint8_t)(px_value >> 24);
+            px[OFFSET_G(tmp_pixel)] = (uint8_t)(px_value >> 16);
+            px[OFFSET_B(tmp_pixel)] = (uint8_t)(px_value >> 8);
+            px[OFFSET_W(tmp_pixel)] = (uint8_t)px_value;
 
-        px[OFFSET_R(tmp_pixel)] = (uint8_t)(px_value >> 24);
-        px[OFFSET_G(tmp_pixel)] = (uint8_t)(px_value >> 16);
-        px[OFFSET_B(tmp_pixel)] = (uint8_t)(px_value >> 8);
-        px[OFFSET_W(tmp_pixel)] = (uint8_t)px_value;
+        } else {
+            px[OFFSET_R(tmp_pixel)] = (uint8_t)(px_value >> 16);
+            px[OFFSET_G(tmp_pixel)] = (uint8_t)(px_value >> 8);
+            px[OFFSET_B(tmp_pixel)] = (uint8_t)px_value;
+        }
 
         return 0;
     }
@@ -181,12 +187,21 @@ void process_command(byte argc, byte *argv){
         case PIXEL_SET_STRIP: {
             // sets the entirety of the strip to one colour
 
-            uint32_t strip_colour = (uint32_t)argv[1] +
+            uint32_t strip_colour = 0;
+            if (argc > 8) {
+                color_depth = 4;
+                strip_colour = (uint32_t)argv[1] +
                 ((uint32_t)argv[2]<<7) +
                 ((uint32_t)argv[3]<<14) +
                 ((uint32_t)argv[4]<< 21) +
                 ((uint32_t)argv[5] << 28);
-
+            } else {
+                color_depth = 3;
+                strip_colour = (uint32_t)argv[1] +
+                ((uint32_t)argv[2]<<7) +
+                ((uint32_t)argv[3]<<14) +
+                ((uint32_t)argv[4]<< 21);
+            }
             if (! isShifting) {
                 if (strip_colour == 0) {
                     // set all of the pixels back to 0
@@ -204,8 +219,14 @@ void process_command(byte argc, byte *argv){
         case PIXEL_SET_PIXEL: {
             // sets the pixel given by the index to the given colour
             uint16_t index = (uint16_t)argv[1] + ((uint16_t)argv[2]<<7);
-            uint32_t colour = (uint32_t)argv[3] + ((uint32_t)argv[4]<<7) +
+            int32_t colour = 0;
+           if (color_depth > 3){
+                colour = (uint32_t)argv[3] + ((uint32_t)argv[4]<<7) +
                 ((uint32_t)argv[5]<<14) + ((uint32_t)argv[6] << 21) + ((uint32_t)argv[6] << 28);
+           } else {
+                colour = (uint32_t)argv[3] + ((uint32_t)argv[4]<<7) +
+                ((uint32_t)argv[5]<<14) + ((uint32_t)argv[6] << 21);
+           }
 
             if (isShifting) {
                 break;
