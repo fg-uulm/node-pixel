@@ -24,11 +24,17 @@
 */
 
 #include <Servo.h>
+#include <WebUSB.h>
+
 #include <Wire.h>
 #include "Firmata.h"
 
 #include "./lw_ws2812.h"
 #include "./ws2812.h"
+
+WebUSB WebUSBSerial(1 /* https:// */, "webusb.github.io/arduino/demos/rgb");
+
+#define Serial WebUSBSerial
 
 #define serialport Serial2
 
@@ -759,6 +765,9 @@ void systemResetCallback()
 
 void setup()
 {
+  Serial.begin(9600);
+  Serial.write("Sketch begins.\r\n");
+  Serial.flush();
   Firmata.setFirmwareVersion(FIRMATA_FIRMWARE_MAJOR_VERSION, FIRMATA_FIRMWARE_MINOR_VERSION);
 
   Firmata.attach(ANALOG_MESSAGE, analogWriteCallback);
@@ -796,7 +805,10 @@ void setup()
 void loop()
 {
   byte pin, analogPin;
-
+  if (Serial && Serial.available()) {
+    Serial.print("Set LED to ");
+    Serial.flush();
+  }
   /* DIGITALREAD - as fast as possible, check for changes and output them to the
    * FTDI buffer using Serial.print()  */
   checkDigitalInputs();

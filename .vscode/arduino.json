@@ -1,0 +1,5 @@
+{
+    "port": "/dev/cu.usbmodem141101",
+    "board": "arduino:avr:micro",
+    "sketch": "firmware/build/node_pixel_firmata/node_pixel_firmata.ino"
+}

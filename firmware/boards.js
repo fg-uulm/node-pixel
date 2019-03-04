@@ -8,7 +8,7 @@ module.exports = {
         package: "arduino:avr:uno",
     },
     "nano": {
-        cpu: "atmega328",
+        cpu: "atmega328",`
         package: "arduino:avr:nano:cpu=atmega328",
     },
     "pro-mini": {
