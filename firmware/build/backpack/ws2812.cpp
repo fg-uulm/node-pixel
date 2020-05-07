@@ -12,7 +12,7 @@ bool strip_changed[MAX_STRIPS]; // used to optimise strip writes.
 uint8_t *px;
 uint16_t px_count;
 uint8_t strip_count = 0; // number of strips being used.
-uint8_t color_depth = 4; // Bytes used to hold one pixel
+uint8_t color_depth = 3; // Bytes used to hold one pixel
 
 uint8_t offsetRed;
 uint8_t offsetGreen;
@@ -46,7 +46,7 @@ void ws2812_initialise(bool backpack) {
     }
 }
 
-void initialise_pixels(uint16_t num_pixels) {
+void initialise_pixels(uint16_t num_pixels, uint8_t temp_color_depth) {
     // called to set up the pixel array, allocate memory etc.
 
     if (px) {
@@ -55,9 +55,10 @@ void initialise_pixels(uint16_t num_pixels) {
     }
 
     if (num_pixels > 0) {
-        if (px = (uint8_t *)malloc(num_pixels*color_depth)) {
-            memset(px, 0, num_pixels*color_depth);
+        if (px = (uint8_t *)malloc(num_pixels*temp_color_depth)) {
+            memset(px, 0, num_pixels*temp_color_depth);
             px_count = num_pixels;
+            color_depth = temp_color_depth;
         } else {
             px_count = 0;
         }
@@ -238,7 +239,8 @@ void process_command(byte argc, byte *argv){
             if (argc >= 3) {
                 // set everything back to initial state.
                 ws2812_initialise(isBackpack);
-
+                bool isRGBW = false;
+                uint8_t temp_color_depth;
                 // loop over each group of 3 bytes and pull out the details
                 // around the pin and strand length.
                 for (uint8_t i = 0; i < (argc / 3); i ++) {
@@ -253,7 +255,7 @@ void process_command(byte argc, byte *argv){
                     }
 
                     // get the top two bits for the colour order type.
-                    uint8_t colour_type = (uint8_t)argv[argv_offset+1]>>5;
+                    uint8_t colour_type = (uint8_t)argv[argv_offset+1] >> 5;
                     switch (colour_type) {
                         case PIXEL_COLOUR_GRB:
                             setColorOrderGRB();
@@ -265,6 +267,7 @@ void process_command(byte argc, byte *argv){
                             setColorOrderBRG();
                             break;
                         case PIXEL_COLOUR_RGBW:
+                            isRGBW = true;
                             setColorOrderRGBW();
                             break;
                     }
@@ -280,11 +283,13 @@ void process_command(byte argc, byte *argv){
                     // 1D pixel array
                     strips[i].set_offset(prev_strip_length);
                     px_count = px_count + strips[i].get_length();
-
+                    if (isRGBW == true) {
+                        temp_color_depth = 4;
+                    }
                     strip_count++;
                 }
                 // now initialise our pixel count
-                initialise_pixels(px_count);
+                initialise_pixels(px_count, temp_color_depth);
             }
 
             break;
